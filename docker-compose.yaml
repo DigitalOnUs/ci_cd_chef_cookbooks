@@ -1,0 +1,79 @@
+version: '3.7'
+services:
+  chef-server:
+    image: xfrarod/chef-server:v1
+    container_name: chef-server
+    ports:
+      - "8088:80"
+      - "443:443"
+    command: /usr/bin/chef-server-ctl reconfigure
+    entrypoint: /bin/bash -e /usr/local/bin/run.sh
+#    deploy:
+#      replicas: 1
+#    configs:
+#      - my_config
+#      - my_other_config
+    networks:
+       - chefnetwork
+
+  chef-node:
+    image: xfrarod/chef-node:v1
+    container_name: chef-node
+#    ports:
+#      - "8088:80"
+#      - "443:443"
+    command: tail -F anything
+    depends_on:
+      - "chef-server"
+#    deploy:
+#      replicas: 1
+#    configs:
+#      - my_config
+#      - my_other_config
+    networks:
+       - chefnetwork
+
+  jenkins-master:
+    image: gmlpdou/jenkins
+    container_name: jenkins-master
+    ports:
+      - 50000:50000
+      - 8080:8080
+    networks:
+      - chefnetwork
+    volumes:
+      - jm:/var/jenkins_home
+      - jmshare:/usr/share/jenkins/ref
+    environment:
+      ADMIN_PASSWORD: admin
+      ADMIN_USER: admin123
+
+  jenkins-slave:
+    image: xfrarod/jenkins-slave
+    container_name: jenkins-slave
+    depends_on:
+      - "jenkins-master"
+      - "chef-server"
+    environment:
+      - USER_NAME_SECRET=admin
+      - PASSWORD_SECRET=admin123
+      - COMMAND_OPTIONS=-master http://jenkins-master:8080 ${AGENT_LABELS} -executors 4
+    volumes:
+      - workspace:/workspace
+    networks:
+      - chefnetwork
+
+#configs:
+#  my_config:
+#    file: ./my_config.txt
+#  my_other_config:
+#    external: true
+
+networks:
+  chefnetwork:
+
+
+volumes:
+  jm:
+  jmshare:
+  workspace:
