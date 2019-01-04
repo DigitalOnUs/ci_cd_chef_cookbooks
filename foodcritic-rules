@@ -1,0 +1,150 @@
+import hudson.plugins.warnings.parser.Warning
+import hudson.plugins.analysis.util.model.Priority
+String ruleNumber = matcher.group(1)
+String message = matcher.group(2)
+String fileName = matcher.group(3)
+String lineNumber = matcher.group(4)
+Priority prio = Priority.NORMAL
+String type = ""
+if( ruleNumber == "FC030 ") {
+    if( prio != Priority.HIGH ) {
+        prio = Priority.NORMAL
+    }
+    type += "annoyances, "
+}
+if( ruleNumber == "FC001" || ruleNumber == "FC019" || ruleNumber == "FC046" || ruleNumber == "FC047" ) {
+    if( prio != Priority.HIGH ) {
+        prio = Priority.NORMAL
+    }
+    type += "attributes, "
+}
+if( ruleNumber == "FC047" ) {
+    if( prio != Priority.HIGH ) {
+        prio = Priority.NORMAL
+    }
+    type += "chef11, "
+}
+if( ruleNumber == "FC045" ) {
+    if( prio != Priority.HIGH ) {
+        prio = Priority.NORMAL
+    }
+    type += "chef12, "
+}
+if( ruleNumber == "FC006" || ruleNumber == "FC007" || ruleNumber == "FC009" || ruleNumber == "FC010" || ruleNumber == "FC016" || ruleNumber == "FC017" || ruleNumber == "FC021" || ruleNumber == "FC022" || ruleNumber == "FC026" || ruleNumber == "FC027" || ruleNumber == "FC028" || ruleNumber == "FC029" || ruleNumber == "FC031" || ruleNumber == "FC032" || ruleNumber == "FC033" || ruleNumber == "FC034" || ruleNumber == "FC037" || ruleNumber == "FC038" || ruleNumber == "FC039" || ruleNumber == "FC045" || ruleNumber == "FC046" || ruleNumber == "FC047" || ruleNumber == "FC050" || ruleNumber == "FC051" || ruleNumber == "FC055" || ruleNumber == "FC056" || ruleNumber == "FC057" || ruleNumber == "FC058" || ruleNumber == "FC059" || ruleNumber == "FC060" || ruleNumber == "FC061") {
+    prio = Priority.HIGH
+    type += "correctness, "
+}
+if( ruleNumber == "FC015" ) {
+    if( prio != Priority.HIGH ) {
+        prio = Priority.NORMAL
+    }
+    type += "definitions, "
+}
+if( ruleNumber == "FC018" || ruleNumber == "FC025" || ruleNumber == "FC042" || ruleNumber == "FC043") {
+    if( prio != Priority.HIGH ) {
+        prio = Priority.NORMAL
+    }
+    type += "deprecated, "
+}
+if( ruleNumber == "FC050") {
+    if( prio != Priority.HIGH ) {
+        prio = Priority.NORMAL
+    }
+    type += "environments, "
+}
+if( ruleNumber == "FC040" || ruleNumber == "FC041") {
+    if( prio != Priority.HIGH ) {
+        prio = Priority.NORMAL
+    }
+    type += "etsy, "
+}
+if( ruleNumber == "FC006" || ruleNumber == "FC013") {
+    if( prio != Priority.HIGH ) {
+        prio = Priority.NORMAL
+    }
+    type += "files, "
+}
+if( ruleNumber == "FC014") {
+    if( prio != Priority.HIGH ) {
+        prio = Priority.NORMAL
+    }
+    type += "libraries, "
+}
+if( ruleNumber == "FC015" || ruleNumber == "FC016" || ruleNumber == "FC017" || ruleNumber == "FC018" || ruleNumber == "FC021") {
+    if( prio != Priority.HIGH ) {
+        prio = Priority.NORMAL
+    }
+    type += "lwrp, "
+}
+if( ruleNumber == "FC007" || ruleNumber == "FC008" || ruleNumber == "FC029" || ruleNumber == "FC031" || ruleNumber == "FC045" || ruleNumber == "FC052" || ruleNumber == "FC053" || ruleNumber == "FC055" || ruleNumber == "FC056" || ruleNumber == "FC061" || ruleNumber == "FC062" || ruleNumber == "FC063"  || ruleNumber == "FC064" || ruleNumber == "FC065"  || ruleNumber == "FC066" ) {
+    prio = Priority.HIGH
+    type += "metadata, "
+}
+if( ruleNumber == "FC032" || ruleNumber == "FC043") {
+    if( prio != Priority.HIGH ) {
+        prio = Priority.NORMAL
+    }
+    type += "notifications, "
+}
+if( ruleNumber == "FC003" || ruleNumber == "FC024") {
+    if( prio != Priority.HIGH ) {
+        prio = Priority.NORMAL
+    }
+    type += "portability, "
+}
+if( ruleNumber == "FC048") {
+    if( prio != Priority.HIGH ) {
+        prio = Priority.NORMAL
+    }
+    type += "processes, "
+}
+if( ruleNumber == "FC011" || ruleNumber == "FC012") {
+    if( prio != Priority.HIGH ) {
+        prio = Priority.NORMAL
+    }
+    type += "readme, "
+}
+if( ruleNumber == "FC040" || ruleNumber == "FC041") {
+    if( prio != Priority.HIGH ) {
+        prio = Priority.NORMAL
+    }
+    type += "recipe, "
+}
+if( ruleNumber == "FC049" || ruleNumber == "FC050") {
+    prio = Priority.HIGH
+    type += "roles, "
+}
+if( ruleNumber == "FC010") {
+    prio = Priority.HIGH
+    type += "search, "
+}
+if( ruleNumber == "FC004") {
+    if( prio != Priority.HIGH ) {
+        prio = Priority.NORMAL
+    }
+    type += "services, "
+}
+if( ruleNumber == "FC003") {
+    prio = Priority.HIGH
+    type += "solo, "
+}
+if( ruleNumber == "FC002") {
+    if( prio != Priority.HIGH ) {
+        prio = Priority.NORMAL
+    }
+    type += "strings, "
+}
+if( ruleNumber == "FC001" || ruleNumber == "FC002" || ruleNumber == "FC004" || ruleNumber == "FC005" || ruleNumber == "FC008" || ruleNumber == "FC011" || ruleNumber == "FC012" || ruleNumber == "FC013" || ruleNumber == "FC014" || ruleNumber == "FC015" || ruleNumber == "FC018" || ruleNumber == "FC019" || ruleNumber == "FC023" || ruleNumber == "FC025" || ruleNumber == "FC040" || ruleNumber == "FC041" || ruleNumber == "FC043" || ruleNumber == "FC044" || ruleNumber == "FC048" || ruleNumber == "FC049" || ruleNumber == "FC052" || ruleNumber == "FC053") {
+    if( prio != Priority.HIGH ) {
+        prio = Priority.NORMAL
+    }
+    type += "style, "
+}
+if( ruleNumber == "FC064" || ruleNumber == "FC065") {
+    if( prio != Priority.HIGH ) {
+        prio = Priority.NORMAL
+    }
+    type += "supermarket, "
+}
+type = type.substring(0, type.length()-2)
+return new Warning(fileName, Integer.parseInt(lineNumber), type, ruleNumber, message,  prio);
