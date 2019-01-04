@@ -60,6 +60,7 @@ services:
       - COMMAND_OPTIONS=-master http://jenkins-master:8080 ${AGENT_LABELS} -executors 4
     volumes:
       - workspace:/workspace
+      - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - chefnetwork
 

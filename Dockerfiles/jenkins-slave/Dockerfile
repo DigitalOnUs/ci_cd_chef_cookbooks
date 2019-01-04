@@ -48,9 +48,26 @@ RUN mkdir /workspace && chown -R jenkins:root /workspace
 
 RUN apt-get update && \
     apt-get install -y default-jre git python python-pip python-setuptools python-dev \
-    ca-certificates build-essential openssh-server openssl && \
-    wget -q https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/${SWARM_CLIENT_VERSION}/swarm-client-${SWARM_CLIENT_VERSION}.jar -P /home/jenkins/ && \
-    pip install docker-compose
+    ca-certificates build-essential openssh-server openssl software-properties-common && \
+    wget -q https://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/${SWARM_CLIENT_VERSION}/swarm-client-${SWARM_CLIENT_VERSION}.jar -P /home/jenkins/
+#&& \
+#    pip install docker-compose
+
+RUN add-apt-repository ppa:cpick/hub && \
+    apt-get update && \
+    apt-get install -y hub sudo
+
+RUN usermod -aG sudo jenkins
+RUN echo 'jenkins   ALL=(ALL:ALL) NOPASSWD:ALL' > /etc/sudoers.d/jenkins
+
+# Install docker
+
+RUN apt install -y apt-transport-https ca-certificates curl software-properties-common && \
+    echo 'deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable' > /etc/apt/sources.list.d/docker.list &&  \
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - && \
+    apt update && \
+    apt install -y docker-ce && \
+    docker --version
 
 COPY run.sh /run.sh
 RUN chmod +x /run.sh
