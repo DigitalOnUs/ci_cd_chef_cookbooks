@@ -1,13 +1,11 @@
 FROM xfrarod/chef-node:v1 as chefnode
 
-FROM xfrarod/chef-server:v1 as  chefserver
+FROM xfrarod/chef-server:v1 as chefserver
 
 FROM chef/chefdk:3.5.13
 
 MAINTAINER Francisco Rodriguez <francisco.rodriguez@digitalonus.com>
-
 ARG DOCKER_VERSION="17.12.1"
-RUN chef gem install kitchen-docker
 
 ARG version="0.2.0"
 ARG build_date="unknown"
@@ -74,8 +72,6 @@ RUN chmod +x /run.sh
 
 ENTRYPOINT ["/run.sh"]
 
-
-
 # Install chef-server configuration
 
 #USER jenkins:0
@@ -95,4 +91,11 @@ RUN chown -R jenkins:0 /home/jenkins/.chef
 #Y\
 #EOS
 
+USER jenkins:0
+RUN gem install kitchen-docker
+RUN chef gem install kitchen-docker
+RUN gem install rubocop
+RUN gem install rubocop-checkstyle_formatter
+
+USER root
 
