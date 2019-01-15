@@ -49,8 +49,8 @@ services:
       - workspace:/workspace
       - /var/run/docker.sock:/var/run/docker.sock
     network_mode: host
-#    extra_hosts:
-#      - "localhost:172.18.192.189"
+    extra_hosts:
+      - 'chef-server:127.0.0.1'
 #    networks:
 #      - chefnetwork
 #    links:

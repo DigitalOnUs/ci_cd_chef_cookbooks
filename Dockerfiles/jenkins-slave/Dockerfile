@@ -74,8 +74,6 @@ ENTRYPOINT ["/run.sh"]
 
 # Install chef-server configuration
 
-#USER jenkins:0
-
 COPY --from=chefnode /root/.chef/frrodriguez.pem /home/jenkins/.chef/frrodriguez.pem
 COPY --from=chefnode /root/.chef/credentials /home/jenkins/.chef/credentials
 
@@ -96,6 +94,8 @@ RUN gem install kitchen-docker
 RUN chef gem install kitchen-docker
 RUN gem install rubocop
 RUN gem install rubocop-checkstyle_formatter
+RUN echo "cookbook_path   = './cookbook'" >> ~/.chef/credentials
 
 USER root
+RUN gem install rubocop-checkstyle_formatter
 
